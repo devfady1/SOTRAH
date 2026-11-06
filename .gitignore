@@ -1,0 +1,23 @@
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary Office Lock & Backup files
+~$*
+takdiim_backup.docx
+
+# Python cache & virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+env/
+venv/
+
+# Scratch & Extraction temporary files
+*.tmp
+scratch/
