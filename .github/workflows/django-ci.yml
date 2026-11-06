@@ -34,3 +34,4 @@ jobs:
       working-directory: ./backend
       run: |
         python manage.py test
+

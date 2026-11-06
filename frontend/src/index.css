@@ -1,0 +1,497 @@
+:root {
+  --bg-obsidian: #050608;
+  --bg-elevated: #0b0c10;
+  --bg-card: rgba(16, 18, 24, 0.78);
+  --bg-card-solid: #101218;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.16);
+  --text-primary: #ffffff;
+  --text-secondary: #858a96;
+  --text-muted: #565b66;
+  --sotrah-orange: #ff5d1a;
+  --sotrah-amber: #ff8c38;
+  --sotrah-emerald: #10b981;
+  --sotrah-cyan: #38bdf8;
+  --sotrah-red: #ef4444;
+  --font-sans: 'IBM Plex Sans Arabic', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-obsidian);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-obsidian);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  selection-background-color: rgba(255, 93, 26, 0.3);
+}
+
+::selection {
+  background: rgba(255, 93, 26, 0.32);
+  color: #fff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050608;
+}
+::-webkit-scrollbar-thumb {
+  background: #1d202a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff5d1a;
+}
+
+/* Floating Raycast-Style Navbar */
+.ray-navbar-wrap {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.ray-navbar {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 1120px;
+  height: 58px;
+  background: rgba(15, 16, 20, 0.78);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ray-navbar:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #9ba0ab;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+/* Buttons matching the Raycast Video */
+.btn-ray-white {
+  background: #ffffff;
+  color: #07080a;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.16);
+  text-decoration: none;
+}
+
+.btn-ray-white:hover {
+  background: #f2f4f8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 26px rgba(255, 255, 255, 0.26);
+}
+
+.btn-ray-dark {
+  background: rgba(255, 255, 255, 0.07);
+  color: #e2e5ec;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-ray-dark:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Two-tone Raycast Headlines */
+.headline-two-tone {
+  font-size: clamp(28px, 3.8vw, 44px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.headline-two-tone .tone-bright {
+  color: #ffffff;
+}
+
+.headline-two-tone .tone-muted {
+  color: #7c818d;
+  font-weight: 500;
+}
+
+/* Hero Hardware Console (Raycast Keyboard Rim-Glow Frame) */
+.hero-hardware-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1030px;
+  margin: 54px auto 0;
+  perspective: 1400px;
+}
+
+.hero-rim-glow {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82%;
+  height: 120px;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    rgba(255, 93, 26, 0.62) 0%,
+    rgba(255, 136, 51, 0.28) 38%,
+    rgba(16, 185, 129, 0.08) 65%,
+    transparent 80%
+  );
+  filter: blur(26px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-chassis {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, #1b1d24 0%, #0e1015 35%, #090a0e 100%);
+  border-radius: 24px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow:
+    0 -2px 35px rgba(255, 93, 26, 0.26),
+    0 35px 90px rgba(0, 0, 0, 0.92),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  transform-style: preserve-3d;
+}
+
+.hero-chassis::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 115, 45, 0.95) 35%,
+    #ffffff 50%,
+    rgba(255, 115, 45, 0.95) 65%,
+    transparent 100%
+  );
+  z-index: 4;
+  filter: drop-shadow(0 0 10px rgba(255, 93, 26, 0.9));
+}
+
+.hero-chassis-inner {
+  background: #08090c;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Anodized Hardware Keycap / Sensor Cap Styling */
+.sensor-cap {
+  position: relative;
+  background: linear-gradient(145deg, #1a1c23 0%, #101217 65%, #0b0c10 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 3px solid #060709;
+  border-radius: 12px;
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+  user-select: none;
+}
+
+.sensor-cap:hover,
+.sensor-cap.active {
+  border-color: rgba(255, 93, 26, 0.65);
+  box-shadow:
+    0 10px 26px rgba(255, 93, 26, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.sensor-cap.orange-accent {
+  background: linear-gradient(145deg, #ff6321 0%, #d94308 100%);
+  border-color: rgba(255, 165, 120, 0.45);
+  color: #fff;
+}
+
+/* Circular Wheel Section (00:02 in Raycast Video) */
+.wheel-stage {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.wheel-cap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78px;
+  height: 78px;
+  margin-top: -39px;
+  margin-left: -39px;
+  background: linear-gradient(160deg, #1e2029 0%, #111319 65%, #0a0b0f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 4px solid #040507;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.78),
+    inset 0 1px 1px rgba(255, 255, 255, 0.16);
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wheel-cap::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.wheel-cap.is-selected {
+  border-color: var(--sotrah-orange);
+  box-shadow:
+    0 0 28px rgba(255, 93, 26, 0.42),
+    0 14px 28px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1px rgba(255, 160, 110, 0.45);
+}
+
+/* Spec Matrix Table (00:04 & 00:07 in Raycast Video) */
+.spec-row-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.spec-row-pair .spec-key {
+  color: #777c88;
+  text-transform: uppercase;
+}
+
+.spec-row-pair .spec-val {
+  color: #f3f5f8;
+  font-weight: 600;
+  text-align: left;
+  direction: ltr;
+}
+
+/* Bento Cards (00:05 in Raycast Video) */
+.bento-card {
+  position: relative;
+  background: radial-gradient(120% 100% at 50% 0%, rgba(32, 35, 46, 0.52) 0%, rgba(12, 13, 18, 0.92) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 22px;
+  overflow: hidden;
+  min-height: 510px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+  transition: border-color 0.3s ease;
+}
+
+.bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.bento-pill-btn {
+  background: rgba(15, 16, 22, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #8f94a0;
+  padding: 8px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+}
+
+.bento-pill-btn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.bento-pill-btn.active {
+  background: rgba(255, 255, 255, 0.11);
+  color: #ffffff;
+  border-color: rgba(255, 93, 26, 0.55);
+  box-shadow: 0 4px 18px rgba(255, 93, 26, 0.18);
+}
+
+/* 14 Icon Squares Grid (00:07 in Raycast Video) */
+.custom-caps-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.custom-cap-tile {
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #c9cdd6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-cap-tile:hover,
+.custom-cap-tile.active {
+  background: rgba(255, 93, 26, 0.14);
+  border-color: var(--sotrah-orange);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 93, 26, 0.22);
+}
+
+/* Diagonal Laser Beams above Footer (00:09 in Raycast Video) */
+.laser-beams-stage {
+  position: relative;
+  height: 290px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laser-beam {
+  position: absolute;
+  width: 520px;
+  height: 68px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(239, 68, 68, 0.08) 20%,
+    rgba(255, 93, 26, 0.52) 60%,
+    rgba(255, 145, 70, 0.85) 85%,
+    transparent 100%
+  );
+  transform: rotate(28deg);
+  filter: blur(16px);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+footer a {
+  color: #7d828f;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  .nav-links {
+    display: none;
+  }
+  .wheel-stage {
+    width: 340px;
+    height: 340px;
+  }
+  .custom-caps-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

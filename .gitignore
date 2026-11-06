@@ -24,3 +24,8 @@ db.sqlite3
 # Scratch & Extraction temporary files
 *.tmp
 scratch/
+
+# Node / Frontend build & dependencies
+node_modules/
+dist/
+.vite/

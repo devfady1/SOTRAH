@@ -112,3 +112,4 @@ git push -u origin feat/your-feature-name
 5. **Frontend Dashboard (Web):** (لوحة القيادة التفاعلية بـ React).
 6. **Mobile App:** (تطبيق مشرف الوردية والعمال).
 7. **Documentation & Testing:** (توثيق الـ APIs، اختبارات الجودة، وكتابة تقرير المشروع).
+

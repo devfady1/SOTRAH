@@ -60,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.gtm',
             ],
         },
     },
@@ -147,3 +148,8 @@ SIMPLE_JWT = {
 # CORS Configuration
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+
+# Google Tag Manager (GTM)
+GTM_ID = os.environ.get('GTM_ID', 'GTM-XXXXXXX')
+

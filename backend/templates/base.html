@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    {% if GTM_ID %}
+    <!-- Google Tag Manager -->
+    <script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ GTM_ID }}');</script>
+    <!-- End Google Tag Manager -->
+    {% endif %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}سُترة | المنظومة الطبية الذكية{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0284C7;
+            --primary-dark: #0369A1;
+            --accent: #10B981;
+            --text-main: #1E293B;
+            --bg-light: #F8FAFC;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background-color: #25D366;
+            color: #ffffff;
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% if GTM_ID %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ GTM_ID }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {% endif %}
+
+    <header>
+        <div class="logo">
+            <h2>سُترة | SOTRAH</h2>
+        </div>
+        <nav>
+            <a href="https://wa.me/201000000000" class="whatsapp-btn" target="_blank" rel="noopener">تواصل واتساب</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Floating WhatsApp Action -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float whatsapp-track" target="_blank" rel="noopener">
+        <span>💬 تواصل معنا عبر واتساب</span>
+    </a>
+
+    <!-- Universal DataLayer & Analytics Tracking Script -->
+    <script>
+        // دالة موحدة لإرسال الأحداث لـ Google Tag Manager
+        function pushToDataLayer(eventName, eventParams) {
+            window.dataLayer = window.dataLayer || [];
+            var payload = Object.assign({ event: eventName }, eventParams || {});
+            window.dataLayer.push(payload);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. تتبع الضغط على روابط وأزرار واتساب تلقائياً (whatsapp_click)
+            var whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"], .whatsapp-track, .whatsapp-btn');
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    pushToDataLayer('whatsapp_click', {
+                        link_url: link.href
+                    });
+                });
+            });
+
+            // 2. تتبع إرسال النماذج بنجاح (form_submit)
+            var trackedForms = document.querySelectorAll('form.track-form, #contactForm, #consultationForm');
+            trackedForms.forEach(function(form) {
+                form.addEventListener('submit', function() {
+                    pushToDataLayer('form_submit', {
+                        form_id: form.id || 'general_form'
+                    });
+                });
+            });
+        });
+    </script>
+
+    {# 3. حدث إتمام الحجز (عند توفر متغير booking_done من الفيو) #}
+    {% if booking_done %}
+    <script>
+        pushToDataLayer('book_consultation', {
+            specialty: '{{ specialty|default:"general"|escapejs }}'
+        });
+    </script>
+    {% endif %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
