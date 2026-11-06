@@ -256,6 +256,15 @@ flowchart TD
 ```text
 SOTRAH/
 │
+├── backend/                              # الباك إند ومنظومة الـ APIs السحابية (Django SaaS)
+│   ├── manage.py                         # أداة إدارة مشروع دجانغو
+│   ├── requirements.txt                  # متطلبات وحزم الباك إند
+│   ├── .env.example                      # نموذج متغيرات البيئة للإنتاج والتطوير
+│   ├── sotrah_backend/                   # إعدادات المشروع والتوجيه الأساسي (Settings & URLs)
+│   └── apps/
+│       ├── core/                         # معمارية SaaS Tenant (المنشآت)، خطط الاشتراك، وإدارة البيانات
+│       └── accounts/                     # المصادقة (JWT Auth)، المستخدمين، الأدوار الوظيفية، وتسجيل الدخول
+│
 ├── assets/                               # الصور والرسوم التوضيحية وشعار المشروع
 │   ├── logo.png                          # الشعار الرسمي لمنظومة سُترة
 │   ├── vest_overview.png                 # المخطط الهندسي التوضيحي للسترة
@@ -272,6 +281,35 @@ SOTRAH/
 ├── .gitignore                            # استثناء الملفات المؤقتة وملفات النظام
 └── README.md                             # وثيقة التعريف الشاملة بالمشروع
 ```
+
+---
+
+## ⚡ تشغيل الباك إند ودليل الـ APIs | Backend Quickstart
+
+```bash
+# 1. الدخول إلى مجلد الباك إند
+cd backend
+
+# 2. تثبيت الحزم المطلوبة
+pip install -r requirements.txt
+
+# 3. تطبيق تهجير قواعد البيانات (Migrations)
+python manage.py migrate
+
+# 4. (اختياري) توليد حسابات نموذجية تجريبية لكل الأدوار
+python manage.py seed_demo_data
+
+# 5. تشغيل خادم التطوير
+python manage.py runserver
+```
+
+### نقاط النهاية المتاحة لمصادقة الحسابات (Auth Endpoints):
+* `POST /api/v1/auth/register/` : إنشاء حساب مستخدم ومنشأة سحابية جديدة (SaaS Tenant).
+* `POST /api/v1/auth/login/` : تسجيل الدخول بالبريد الإلكتروني وتوليد توكنات JWT.
+* `POST /api/v1/auth/refresh/` : تجديد صلاحية الـ Access Token.
+* `GET  /api/v1/auth/me/` : استعراض وتحديث بيانات المستخدم الحالي المسجل دخوله.
+* `GET  /api/v1/auth/roles/` : استعراض قائمة الأدوار وأنواع المستخدمين في المنظومة.
+* `GET  /api/v1/auth/industries/` : استعراض القطاعات الصناعية المتاحة للاشتراك.
 
 ---
 

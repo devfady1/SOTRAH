@@ -14,9 +14,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.env
+.env
 .venv/
 env/
 venv/
+*.sqlite3
+db.sqlite3
 
 # Scratch & Extraction temporary files
 *.tmp
