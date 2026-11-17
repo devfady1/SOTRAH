@@ -2,6 +2,21 @@ from rest_framework import permissions
 from apps.accounts.models import User
 
 
+class IsSuperAdmin(permissions.BasePermission):
+    """
+    يسمح بالوصول لمالك النظام العام (Super Admin) فقط لإدارة المنصة السحابية بالكامل.
+    """
+    message = "هذه الصلاحية مخصصة لمالك النظام العام (Super Admin) فقط."
+
+    def has_permission(self, request, view):
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and request.user.is_active
+            and request.user.role == User.Role.SUPER_ADMIN
+        )
+
+
 class IsCompanyAdmin(permissions.BasePermission):
     """
     يسمح بالوصول لمديري الشركات والمسؤولين الإداريين.

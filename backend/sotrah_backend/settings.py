@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     # Sotrah SaaS Project Apps
     'apps.core.apps.CoreConfig',
     'apps.accounts.apps.AccountsConfig',
+    'apps.owner_tenants.apps.OwnerTenantsConfig',
+    'apps.owner_fleet.apps.OwnerFleetConfig',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
