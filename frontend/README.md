@@ -1,5 +1,8 @@
 # React + Vite
 
+> **📢 للمطورين — داشبورد مالك النظام (System Owner Dashboard):**
+> لبناء لوحة تحكم مالك النظام (`SUPER_ADMIN`) كتطبيق مستقل، راجع الدليل التفصيلي الكامل في [OWNER_DASHBOARD_README.md](./OWNER_DASHBOARD_README.md).
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:
