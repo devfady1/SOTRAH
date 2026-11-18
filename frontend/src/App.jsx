@@ -26,7 +26,14 @@ import {
   Wallet,
   Eye,
   Compass,
+  LogIn,
+  UserPlus,
+  UserCheck,
+  Stethoscope,
 } from 'lucide-react';
+
+import AuthModal from './components/AuthModal';
+import { getStoredUser, clearAuthData, fetchCurrentUser } from './services/authApi';
 
 import {
   CIRCULAR_MODULES,
@@ -65,6 +72,17 @@ export default function App() {
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSent, setNewsletterSent] = useState(false);
+
+  // Authentication State
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authInitialTab, setAuthInitialTab] = useState('login');
+  const [currentUser, setCurrentUser] = useState(getStoredUser());
+
+  useEffect(() => {
+    fetchCurrentUser()
+      .then((user) => setCurrentUser(user))
+      .catch(() => {});
+  }, []);
 
   // Web Audio Radar Pulse / Heartbeat Synthesizer when Waveform Player is active
   useEffect(() => {
@@ -333,12 +351,82 @@ export default function App() {
             <li><a href="#specs-matrix">المواصفات الهندسية</a></li>
           </ul>
 
-          {/* Right Action CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <a href="#specs-matrix" className="btn-ray-white">
-              <span>المواصفات الكاملة · Specs</span>
-              <ArrowUpLeft size={15} />
-            </a>
+          {/* Right Action CTA & Auth Buttons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {currentUser ? (
+              <a
+                href="/portal"
+                
+                
+                className="btn-ray-dark"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  borderColor: 'rgba(14, 165, 233, 0.45)',
+                  background: 'rgba(14, 165, 233, 0.12)',
+                  padding: '7px 12px',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                }}
+              >
+                <div
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: '#0ea5e9',
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                  }}
+                >
+                  {currentUser.first_name ? currentUser.first_name.charAt(0) : 'U'}
+                </div>
+                <span style={{ color: '#fff', fontWeight: 600, fontSize: '13px' }}>
+                  {currentUser.first_name || currentUser.username}
+                </span>
+                <span
+                  style={{
+                    fontSize: '10px',
+                    color: '#38bdf8',
+                    background: 'rgba(14, 165, 233, 0.2)',
+                    padding: '2px 6px',
+                    borderRadius: '6px',
+                    fontWeight: 600,
+                  }}
+                >
+                  {currentUser.role_display ? currentUser.role_display.split(' ')[0] : 'كادر طبي'} ↗
+                </span>
+              </a>
+            ) : (
+              <>
+                <a
+                  href="/login"
+                  
+                  
+                  className="btn-ray-dark"
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', cursor: 'pointer', textDecoration: 'none' }}
+                >
+                  <Stethoscope size={14} color="#38bdf8" />
+                  <span>تسجيل الدخول الطبي ↗</span>
+                </a>
+
+                <a
+                  href="/register"
+                  
+                  
+                  className="btn-ray-white"
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', cursor: 'pointer', textDecoration: 'none' }}
+                >
+                  <UserPlus size={14} />
+                  <span>تسجيل منشأة ↗</span>
+                </a>
+              </>
+            )}
           </div>
         </nav>
       </div>
@@ -465,6 +553,24 @@ export default function App() {
             </span>
             <span>استعراض معمارية النظام · Interactive Pitch</span>
           </button>
+
+          <a
+            href="/login"
+            
+            
+            className="btn-ray-white"
+            style={{
+              background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, rgba(14, 165, 233, 0.14) 100%)',
+              borderColor: 'rgba(14, 165, 233, 0.45)',
+              color: '#fff',
+              cursor: 'pointer',
+              textDecoration: 'none',
+              boxShadow: '0 0 20px rgba(6, 182, 212, 0.25)',
+            }}
+          >
+            <Stethoscope size={15} color="#38bdf8" />
+            <span>فتح البوابة الطبية المستقلة (Medical Portal) ↗</span>
+          </a>
         </div>
 
         {/* =====================================================================
@@ -2030,7 +2136,7 @@ export default function App() {
               <li><span>كلية تكنولوجيا الصناعة والطاقة</span></li>
               <li><span>قسم تكنولوجيا المعلومات</span></li>
               <li><span>إشراف: د. محمود حردان</span></li>
-              <li><a href="https://github.com/devfady1/SOTRAH" target="_blank" rel="noreferrer">GitHub Repository ↗</a></li>
+              <li><a href="https://github.com/devfady1/SOTRAH"  rel="noreferrer">GitHub Repository ↗</a></li>
             </ul>
           </div>
         </div>
@@ -2092,6 +2198,21 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Authentication Modal (Login / Register / Profile) */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialTab={authInitialTab}
+        currentUser={currentUser}
+        onAuthSuccess={(user) => {
+          setCurrentUser(user);
+        }}
+        onLogout={() => {
+          clearAuthData();
+          setCurrentUser(null);
+        }}
+      />
 
       {/* Interactive Pitch / Architecture Modal */}
       {demoModalOpen && (
